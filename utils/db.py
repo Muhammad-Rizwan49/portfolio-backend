@@ -16,21 +16,6 @@ def init_db():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    # Projects Table
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS projects (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        description TEXT NOT NULL,
-        tech_stack TEXT,
-        github_link TEXT,
-        live_link TEXT,
-        images TEXT,
-        features TEXT,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )
-    """)
-
     # Admins Table
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS admins (
@@ -123,7 +108,9 @@ def init_db():
         )
 
     # Default About Data
-    about = cursor.execute("SELECT * FROM about").fetchone()
+    about = cursor.execute(
+        "SELECT * FROM about"
+    ).fetchone()
 
     if not about:
         cursor.execute("""

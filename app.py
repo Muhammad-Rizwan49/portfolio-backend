@@ -3,7 +3,6 @@ from flask_cors import CORS
 from flask import send_from_directory
 from routes.about_routes import about_bp
 from utils.db import init_db
-from routes.projects_routes import project_bp
 from routes.auth_routes import auth_bp
 from routes.contact_routes import contact_bp
 from routes.skills_routes import skills_bp
@@ -17,7 +16,6 @@ CORS(app)
 
 init_db()
 
-app.register_blueprint(project_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(contact_bp)
 app.register_blueprint(skills_bp)

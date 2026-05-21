@@ -10,7 +10,7 @@ from routes.skills_routes import skills_bp
 from routes.services_routes import services_bp
 from routes.profile_routes import profile_bp
 from routes.admin_profile_routes import admin_profile_bp
-
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -26,6 +26,9 @@ app.register_blueprint(about_bp)
 app.register_blueprint(profile_bp)
 app.register_blueprint(admin_profile_bp)
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
+
 
 @app.route("/")
 def home():
@@ -34,7 +37,10 @@ def home():
 
 @app.route("/uploads/<path:filename>")
 def uploaded_files(filename):
-    return send_from_directory("uploads", filename)
+    return send_from_directory(
+        UPLOAD_FOLDER,
+        filename
+    )
 
 
 if __name__ == "__main__":

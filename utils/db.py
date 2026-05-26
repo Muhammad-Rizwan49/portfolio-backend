@@ -16,7 +16,7 @@ def init_db():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    # Admins Table
+    # Admins
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS admins (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -25,18 +25,19 @@ def init_db():
     )
     """)
 
-    # Contacts Table
+    # Contacts
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS contacts (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         email TEXT NOT NULL,
         subject TEXT,
-        message TEXT NOT NULL
+        message TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
     """)
 
-    # Skills Table
+    # Skills
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS skills (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -45,7 +46,7 @@ def init_db():
     )
     """)
 
-    # Services Table
+    # Services
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS services (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -54,10 +55,28 @@ def init_db():
     )
     """)
 
-    # About Table
+    # Projects
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS projects (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        description TEXT NOT NULL,
+
+        tech_stack TEXT,
+        github_link TEXT,
+        live_link TEXT,
+
+        images TEXT,
+
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+
+    # About
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS about (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
+
         title TEXT,
         highlight_word TEXT,
         description TEXT,
@@ -82,7 +101,7 @@ def init_db():
     )
     """)
 
-    # Admin Profile Table
+    # Admin Profile
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS admin_profile (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -100,6 +119,7 @@ def init_db():
     ).fetchone()
 
     if not admin:
+
         hashed_password = generate_password_hash("123456")
 
         cursor.execute(
@@ -113,22 +133,36 @@ def init_db():
     ).fetchone()
 
     if not about:
+
         cursor.execute("""
         INSERT INTO about (
-            title, highlight_word, description,
+            title,
+            highlight_word,
+            description,
 
-            exp_years, exp_text,
-            projects_done, projects_text,
-            focus_percent, focus_text,
+            exp_years,
+            exp_text,
 
-            card1_title, card1_desc,
-            card2_title, card2_desc,
-            card3_title, card3_desc
+            projects_done,
+            projects_text,
+
+            focus_percent,
+            focus_text,
+
+            card1_title,
+            card1_desc,
+
+            card2_title,
+            card2_desc,
+
+            card3_title,
+            card3_desc
         )
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             "Creating Digital Solutions With",
             "Purpose",
+
             "I'm Muhammad Rizwan, a dedicated Software Engineer with 4+ years of experience building Flutter mobile apps, modern websites, and clean UI/UX experiences.",
 
             "4+",
@@ -156,6 +190,7 @@ def init_db():
     ).fetchone()
 
     if not profile:
+
         cursor.execute("""
         INSERT INTO admin_profile (
             full_name,

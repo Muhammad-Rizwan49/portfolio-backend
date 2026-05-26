@@ -10,7 +10,7 @@ def get_skills():
     conn = get_db_connection()
 
     skills = conn.execute(
-        "SELECT * FROM skills ORDER BY id DESC"
+        "SELECT * FROM skills ORDER BY id ASC"
     ).fetchall()
 
     conn.close()
